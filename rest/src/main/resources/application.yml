@@ -1,0 +1,38 @@
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  datasource:
+    password: password
+    url: jdbc:postgresql://localhost:5432/users
+    username: cardenascode
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /admin
+
+  endpoint:
+    health:
+      show-details: always
+
+info:
+  application:
+    name: User Manager Microservice
+    description: THIS is a application to manage users
+    version: 1.0
