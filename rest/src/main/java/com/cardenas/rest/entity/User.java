@@ -15,7 +15,6 @@ import java.util.*;
 @AllArgsConstructor
 @Entity
 @Table(name="users")
-@Builder
 public class User  implements Serializable {
 
     @Serial
@@ -34,7 +33,7 @@ public class User  implements Serializable {
 
     private Boolean enabled ;
 
-    @ElementCollection
+
     private Set<UserRole> roles ;
 
 

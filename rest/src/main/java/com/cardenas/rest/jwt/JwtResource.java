@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -32,13 +33,11 @@ public class JwtResource {
 
     public static final String LOGIN="/login";
 
-    /*@Autowired
-    private AuthenticationManager authenticationManager;*/
-
     @Autowired
-    private JwtProvider jwtProvider;
+    private AuthenticationManager authenticationManager;
 
-    private  final UserService userService;
+    private final UserService userService;
+
 
     @PostMapping("register")
     public ResponseEntity<Void> register(@RequestBody RegisterDto request) {
@@ -48,20 +47,15 @@ public class JwtResource {
 
 
     //@PreAuthorize("authenticated")
-    /*@PostMapping(value=LOGIN)
+    @PostMapping(value=LOGIN)
     public ResponseEntity<AuthenticationResponse> login (@RequestBody LoginRequest loginRequest){
-        Authentication authentication=
-                authenticationManager.authenticate( new UsernamePasswordAuthenticationToken( loginRequest.getUsername(),loginRequest.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        //List<String> roleList = authentication.getAuthorities().stream().map
-          //      (authority -> authority.getAuthority()).collect(Collectors.toList());
-        String jwt =jwtProvider.generateToken(authentication);
-        UserDetails userDetails= (UserDetails)authentication.getPrincipal();
-        AuthenticationResponse authenticationResponse=new AuthenticationResponse(jwt,userDetails.getUsername(),userDetails.getAuthorities());
+
+        var authenticationResponse= userService.loginUser(loginRequest);
+
         return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
 
 
-    }*/
+    }
     @PreAuthorize("hasRole('USER')")
     @GetMapping
     public String verify(){

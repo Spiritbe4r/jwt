@@ -1,5 +1,7 @@
 package com.cardenas.rest.service;
 
+import com.cardenas.rest.dtos.AuthenticationResponse;
+import com.cardenas.rest.dtos.LoginRequest;
 import com.cardenas.rest.dtos.RegisterDto;
 import com.cardenas.rest.dtos.RegistrationRequest;
 import com.cardenas.rest.entity.User;
@@ -19,6 +21,8 @@ public interface UserService {
      User updateUser(User user);
 
      void deleteUser(Long id);
+
+     AuthenticationResponse loginUser(LoginRequest loginRequest);
 
      Optional<User> getByUsername(String username);
 
